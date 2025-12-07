@@ -9,7 +9,6 @@ const api = axios.create({
   },
 });
 
-// Add token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -18,7 +17,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle 401 errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -58,6 +56,7 @@ export const ispsAPI = {
   suspend: (id) => api.post(`/isps/${id}/suspend`),
   activate: (id) => api.post(`/isps/${id}/activate`),
   getTelemetry: (id) => api.get(`/isps/${id}/telemetry`),
+  getDashboard: (id) => api.get(`/isps/${id}/dashboard`),
 };
 
 // Licenses API
@@ -114,4 +113,11 @@ export const settingsAPI = {
 // Dashboard API
 export const dashboardAPI = {
   getStats: () => api.get('/dashboard/stats'),
+};
+
+// Top Sites & Apps API (NEW)
+export const topSitesAPI = {
+  getTopSites: (params) => api.get('/sites/top', { params }),
+  getTopApps: () => api.get('/apps/top'),
+  getCategories: () => api.get('/apps/categories'),
 };
