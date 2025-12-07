@@ -121,3 +121,13 @@ export const topSitesAPI = {
   getTopApps: () => api.get('/apps/top'),
   getCategories: () => api.get('/apps/categories'),
 };
+
+// Telemetry History API (for charts)
+export const telemetryHistoryAPI = {
+  getHistory: (params) => api.get('/telemetry/history', { params }),
+};
+
+// Invoice PDF
+export const invoicePdfAPI = {
+  getPDF: (id) => `http://64.23.151.140/api/invoices/${id}/pdf`,
+};

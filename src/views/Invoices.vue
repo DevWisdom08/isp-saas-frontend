@@ -51,9 +51,12 @@
             </td>
             <td>{{ formatDate(invoice.due_date) }}</td>
             <td>{{ invoice.paid_at ? formatDate(invoice.paid_at) : '-' }}</td>
-            <td>
+            <td class="actions">
               <button v-if="invoice.status === 'pending'" @click="markPaid(invoice)" class="btn-sm green">
-                Mark Paid
+                ✓ Pay
+              </button>
+              <button @click="viewPDF(invoice.id)" class="btn-sm blue">
+                📄 PDF
               </button>
             </td>
           </tr>
@@ -154,6 +157,11 @@ const checkOverdue = async () => {
   }
 };
 
+const viewPDF = (invoiceId) => {
+  const token = localStorage.getItem('token');
+  window.open(`http://64.23.151.140/api/invoices/${invoiceId}/pdf?token=${token}`, '_blank');
+};
+
 onMounted(fetchData);
 </script>
 
@@ -180,8 +188,10 @@ th { background: #0f172a; font-weight: 600; color: #94a3b8; font-size: 14px; tex
 .status-badge.paid { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
 .status-badge.pending { background: rgba(234, 179, 8, 0.2); color: #facc15; }
 .status-badge.overdue { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.actions { display: flex; gap: 8px; }
 .btn-sm { padding: 6px 12px; border: none; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; }
 .btn-sm.green { background: #22c55e; color: white; }
+.btn-sm.blue { background: #3b82f6; color: white; }
 .empty { text-align: center; color: #64748b; padding: 40px !important; }
 .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; }
 .modal { background: #1e293b; padding: 32px; border-radius: 16px; width: 100%; max-width: 500px; border: 1px solid #334155; }
