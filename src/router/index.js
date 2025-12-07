@@ -1,0 +1,80 @@
+import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '../stores/auth';
+
+const routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue'),
+    meta: { guest: true },
+  },
+  {
+    path: '/',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/isps',
+    name: 'ISPs',
+    component: () => import('../views/ISPs.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/licenses',
+    name: 'Licenses',
+    component: () => import('../views/Licenses.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/distributors',
+    name: 'Distributors',
+    component: () => import('../views/Distributors.vue'),
+    meta: { requiresAuth: true, adminOnly: true },
+  },
+  {
+    path: '/invoices',
+    name: 'Invoices',
+    component: () => import('../views/Invoices.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: () => import('../views/Users.vue'),
+    meta: { requiresAuth: true, adminOnly: true },
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('../views/Settings.vue'),
+    meta: { requiresAuth: true, adminOnly: true },
+  },
+  {
+    path: '/logs',
+    name: 'Logs',
+    component: () => import('../views/Logs.vue'),
+    meta: { requiresAuth: true, adminOnly: true },
+  },
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next('/login');
+  } else if (to.meta.guest && authStore.isAuthenticated) {
+    next('/');
+  } else if (to.meta.adminOnly && !authStore.isAdmin) {
+    next('/');
+  } else {
+    next();
+  }
+});
+
+export default router;
