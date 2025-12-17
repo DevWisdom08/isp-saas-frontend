@@ -39,24 +39,6 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/commercial',
-    name: 'Commercial',
-    component: () => import('../views/Commercial.vue'),
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/isp-dashboard',
-    name: 'ISPDashboard',
-    component: () => import('../views/ISPDashboard.vue'),
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/distributor-dashboard',
-    name: 'DistributorDashboard',
-    component: () => import('../views/DistributorDashboard.vue'),
-    meta: { requiresAuth: true },
-  },
-  {
     path: '/users',
     name: 'Users',
     component: () => import('../views/Users.vue'),
@@ -70,6 +52,12 @@ const routes = [
   },
   {
     path: '/logs',
+  },
+  {
+    path: "/commercial",
+    name: "Commercial",
+    component: () => import("../views/Commercial.vue"),
+    meta: { requiresAuth: true },
     name: 'Logs',
     component: () => import('../views/Logs.vue'),
     meta: { requiresAuth: true, adminOnly: true },

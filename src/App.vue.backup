@@ -12,14 +12,6 @@
           <span class="icon">📊</span>
           Dashboard
         </router-link>
-        <router-link v-if="authStore.user?.role === 'distributor'" to="/distributor-dashboard" class="nav-item">
-          <span class="icon">👥</span>
-          My ISP Clients
-        </router-link>
-        <router-link v-if="authStore.user?.role === 'isp'" to="/isp-dashboard" class="nav-item">
-          <span class="icon">💻</span>
-          My Cache Server
-        </router-link>
         <router-link to="/isps" class="nav-item">
           <span class="icon">🖥️</span>
           ISPs
